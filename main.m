@@ -64,3 +64,45 @@ title('1x50px Blur');
 
 %% Gaussian Blur
 f = @(m, n, sig) 1000/(2*pi*sig^2) * exp(-1*(m.^2+n.^2)/(2*sig^2)); 
+
+
+%% kernels
+
+emboss = [-2 1 0; -1 1 1; 0 1 2];
+edgedetect = [0 1 0;1 -4 1;0 1 0];
+edgeenhance = [0 0 0; -1 1 0; 0 0 0];
+sharpen = [0 0 0 0 0; 0 0 -1 0 0; 0 -1 5 -1 0; 0 0 -1 0 0; 0 0 0 0 0];
+
+Hem = imfilter(img,emboss,'replicate');
+Hed = imfilter(img,edgedetect,'replicate');
+Hedg = imfilter(img,edgeenhance,'replicate');
+Hsharp = imfilter(img, sharpen, 'replicate');
+
+figure
+subplot(2,2,1)
+image(uint8(Hem))
+axis equal tight;
+set(gca,'xtick',[]); set(gca,'xticklabel',[]);
+set(gca,'ytick',[]); set(gca,'yticklabel',[]);
+title('Embossing');
+
+subplot(2,2,2)
+image(uint8(Hed))
+axis equal tight;
+set(gca,'xtick',[]); set(gca,'xticklabel',[]);
+set(gca,'ytick',[]); set(gca,'yticklabel',[]);
+title('Edge Detection');
+
+subplot(2,2,3)
+image(uint8(Hedg))
+axis equal tight;
+set(gca,'xtick',[]); set(gca,'xticklabel',[]);
+set(gca,'ytick',[]); set(gca,'yticklabel',[]);
+title('Edge Enhancement');
+
+subplot(2,2,4)
+image(uint8(Hsharp))
+axis equal tight;
+set(gca,'xtick',[]); set(gca,'xticklabel',[]);
+set(gca,'ytick',[]); set(gca,'yticklabel',[]);
+title('Sharpening');
